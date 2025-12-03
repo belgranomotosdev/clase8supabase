@@ -1,0 +1,271 @@
+### ===========================================
+### REST API de Supabase con Axios
+### ===========================================
+### Nota: Reemplaza las variables con tus valores reales
+
+@baseUrl = https://nhrzkaobidxsgsulobqt.supabase.co/rest/v1
+@anonKey = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ocnprYW9iaWR4c2dzdWxvYnF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ1OTg0ODcsImV4cCI6MjA4MDE3NDQ4N30.LShqQ-HkgcTNCRGB_CwbhWW729A8KgAVWNk7O-ZezGo
+@accessToken = TU_ACCESS_TOKEN_AQUI
+
+### ===========================================
+### 1. GET - Listar todos los productos
+### ===========================================
+GET {{baseUrl}}/productos
+apikey: {{anonKey}}
+Authorization: Bearer {{accessToken}}
+
+### ===========================================
+### 2. GET - Listar productos con filtro
+### ===========================================
+GET {{baseUrl}}/productos?categoria=eq.electronica
+apikey: {{anonKey}}
+Authorization: Bearer {{accessToken}}
+
+### ===========================================
+### 3. GET - Buscar producto por ID
+### ===========================================
+GET {{baseUrl}}/productos?id=eq.1
+apikey: {{anonKey}}
+Authorization: Bearer {{accessToken}}
+
+### ===========================================
+### 4. GET - Ordenar y limitar
+### ===========================================
+GET {{baseUrl}}/productos?order=precio.desc&limit=5
+apikey: {{anonKey}}
+Authorization: Bearer {{accessToken}}
+
+### ===========================================
+### 5. GET - Búsqueda con LIKE
+### ===========================================
+GET {{baseUrl}}/productos?nombre=ilike.*laptop*
+apikey: {{anonKey}}
+Authorization: Bearer {{accessToken}}
+
+### ===========================================
+### 6. GET - Filtros múltiples (AND)
+### ===========================================
+GET {{baseUrl}}/productos?categoria=eq.electronica&precio=gte.100
+apikey: {{anonKey}}
+Authorization: Bearer {{accessToken}}
+
+### ===========================================
+### 7. POST - Crear producto
+### ===========================================
+POST {{baseUrl}}/productos
+apikey: {{anonKey}}
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+Prefer: return=representation
+
+{
+  "nombre": "Laptop Gaming",
+  "precio": 1299.99,
+  "categoria": "electronica"
+}
+
+### ===========================================
+### 8. POST - Crear múltiples productos
+### ===========================================
+POST {{baseUrl}}/productos
+apikey: {{anonKey}}
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+Prefer: return=representation
+
+[
+  {
+    "nombre": "Mouse Gamer",
+    "precio": 49.99,
+    "categoria": "electronica"
+  },
+  {
+    "nombre": "Teclado Mecánico",
+    "precio": 89.99,
+    "categoria": "electronica"
+  }
+]
+
+### ===========================================
+### 9. PATCH - Actualizar producto
+### ===========================================
+PATCH {{baseUrl}}/productos?id=eq.1
+apikey: {{anonKey}}
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+Prefer: return=representation
+
+{
+  "precio": 999.99
+}
+
+### ===========================================
+### 10. PATCH - Actualizar múltiples campos
+### ===========================================
+PATCH {{baseUrl}}/productos?id=eq.1
+apikey: {{anonKey}}
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+Prefer: return=representation
+
+{
+  "nombre": "Laptop Gaming Pro",
+  "precio": 1499.99,
+  "categoria": "electronica"
+}
+
+### ===========================================
+### 11. DELETE - Eliminar producto por ID
+### ===========================================
+DELETE {{baseUrl}}/productos?id=eq.1
+apikey: {{anonKey}}
+Authorization: Bearer {{accessToken}}
+
+### ===========================================
+### 12. DELETE - Eliminar con filtro
+### ===========================================
+DELETE {{baseUrl}}/productos?categoria=eq.test
+apikey: {{anonKey}}
+Authorization: Bearer {{accessToken}}
+
+### ===========================================
+### STORAGE - Operaciones con archivos
+### ===========================================
+
+### 13. GET - Listar archivos del bucket
+GET {{baseUrl}}/../storage/v1/object/list/images
+apikey: {{anonKey}}
+Authorization: Bearer {{accessToken}}
+
+### 14. GET - Descargar archivo
+GET {{baseUrl}}/../storage/v1/object/public/images/tu-archivo.jpg
+apikey: {{anonKey}}
+
+### 15. POST - Subir archivo (requiere form-data en herramientas como Postman)
+# POST {{baseUrl}}/../storage/v1/object/images/nuevo-archivo.jpg
+# apikey: {{anonKey}}
+# Authorization: Bearer {{accessToken}}
+# Content-Type: multipart/form-data
+# 
+# [archivo binario]
+
+### 16. DELETE - Eliminar archivo
+DELETE {{baseUrl}}/../storage/v1/object/images/archivo-a-eliminar.jpg
+apikey: {{anonKey}}
+Authorization: Bearer {{accessToken}}
+
+### ===========================================
+### AUTH - Operaciones de autenticación
+### ===========================================
+
+### 17. POST - Iniciar sesión
+POST {{baseUrl}}/../auth/v1/token?grant_type=password
+apikey: {{anonKey}}
+Content-Type: application/json
+
+{
+  "email": "usuario@ejemplo.com",
+  "password": "tu_password"
+}
+
+### 18. POST - Registrarse
+POST {{baseUrl}}/../auth/v1/signup
+apikey: {{anonKey}}
+Content-Type: application/json
+
+{
+  "email": "nuevo@ejemplo.com",
+  "password": "password123",
+  "data": {
+    "full_name": "Nombre Completo",
+    "role": "user"
+  }
+}
+
+### 19. GET - Obtener usuario actual
+GET {{baseUrl}}/../auth/v1/user
+apikey: {{anonKey}}
+Authorization: Bearer {{accessToken}}
+
+### 20. POST - Cerrar sesión
+POST {{baseUrl}}/../auth/v1/logout
+apikey: {{anonKey}}
+Authorization: Bearer {{accessToken}}
+
+### ===========================================
+### QUERIES AVANZADAS
+### ===========================================
+
+### 21. SELECT específico
+GET {{baseUrl}}/productos?select=nombre,precio
+apikey: {{anonKey}}
+Authorization: Bearer {{accessToken}}
+
+### 22. Rango de precios
+GET {{baseUrl}}/productos?precio=gte.100&precio=lte.500
+apikey: {{anonKey}}
+Authorization: Bearer {{accessToken}}
+
+### 23. IN - Lista de valores
+GET {{baseUrl}}/productos?categoria=in.(electronica,ropa,hogar)
+apikey: {{anonKey}}
+Authorization: Bearer {{accessToken}}
+
+### 24. IS NULL
+GET {{baseUrl}}/productos?deleted_at=is.null
+apikey: {{anonKey}}
+Authorization: Bearer {{accessToken}}
+
+### 25. Contar registros
+GET {{baseUrl}}/productos?select=count
+apikey: {{anonKey}}
+Authorization: Bearer {{accessToken}}
+Prefer: count=exact
+
+### 26. Paginación
+GET {{baseUrl}}/productos?limit=10&offset=20&order=id.asc
+apikey: {{anonKey}}
+Authorization: Bearer {{accessToken}}
+
+### ===========================================
+### JOINS (si tienes relaciones)
+### ===========================================
+
+### 27. Select con join
+# GET {{baseUrl}}/productos?select=*,categoria:categorias(nombre)
+# apikey: {{anonKey}}
+# Authorization: Bearer {{accessToken}}
+
+### ===========================================
+### RPC - Llamar funciones de PostgreSQL
+### ===========================================
+
+### 28. Llamar función RPC
+# POST {{baseUrl}}/rpc/nombre_funcion
+# apikey: {{anonKey}}
+# Authorization: Bearer {{accessToken}}
+# Content-Type: application/json
+# 
+# {
+#   "param1": "valor1",
+#   "param2": "valor2"
+# }
+
+### ===========================================
+### NOTAS:
+### ===========================================
+# 1. Reemplaza @baseUrl con tu URL de Supabase
+# 2. Reemplaza @anonKey con tu anon/public key
+# 3. Reemplaza @accessToken con tu token JWT (obtén desde /tokens)
+# 4. Los operadores disponibles son:
+#    - eq (igual)
+#    - neq (no igual)
+#    - gt (mayor que)
+#    - gte (mayor o igual)
+#    - lt (menor que)
+#    - lte (menor o igual)
+#    - like (búsqueda)
+#    - ilike (búsqueda case-insensitive)
+#    - in (lista de valores)
+#    - is (null/true/false)
+# 5. Usa REST Client extension en VS Code para ejecutar estos requests
