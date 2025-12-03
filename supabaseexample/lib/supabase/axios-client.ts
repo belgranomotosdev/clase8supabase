@@ -17,87 +17,87 @@ export function createAxiosClient() {
   });
 
   // Interceptor para agregar el token automáticamente
-  instance.interceptors.request.use(
-    async (config) => {
-      const { data: { session } } = await supabase.auth.getSession();
+  // instance.interceptors.request.use(
+  //   async (config) => {
+  //     const { data: { session } } = await supabase.auth.getSession();
       
-      if (session?.access_token) {
-        config.headers.Authorization = `Bearer ${session.access_token}`;
-      }
+  //     if (session?.access_token) {
+  //       config.headers.Authorization = `Bearer ${session.access_token}`;
+  //     }
       
-      return config;
-    },
-    (error) => {
-      return Promise.reject(error);
-    }
-  );
+  //     return config;
+  //   },
+  //   (error) => {
+  //     return Promise.reject(error);
+  //   }
+  // );
 
-  // Interceptor para manejar errores
-  instance.interceptors.response.use(
-    (response) => response,
-    (error) => {
-      if (error.response?.status === 401) {
-        console.error('No autorizado - Token expirado o inválido');
-      }
-      return Promise.reject(error);
-    }
-  );
+  // // Interceptor para manejar errores
+  // instance.interceptors.response.use(
+  //   (response) => response,
+  //   (error) => {
+  //     if (error.response?.status === 401) {
+  //       console.error('No autorizado - Token expirado o inválido');
+  //     }
+  //     return Promise.reject(error);
+  //   }
+  // );
 
   return instance;
 }
 
-/**
- * Funciones helper simples para operaciones CRUD
- */
+// /**
+//  * Funciones helper simples para operaciones CRUD
+//  */
 
-// GET - Listar registros
-export async function getAll(table, filters = {}) {
-  const axios = createAxiosClient();
-  const params = {};
+// // GET - Listar registros
+// export async function getAll(table, filters = {}) {
+//   const axios = createAxiosClient();
+//   const params = {};
   
-  // Agregar filtros (ejemplo: { categoria: 'electronica' })
-  Object.entries(filters).forEach(([key, value]) => {
-    params[key] = `eq.${value}`;
-  });
+//   // Agregar filtros (ejemplo: { categoria: 'electronica' })
+//   Object.entries(filters).forEach(([key, value]) => {
+//     params[key] = `eq.${value}`;
+//   });
   
-  const response = await axios.get(`/${table}`, { params });
-  return response.data;
-}
+//   const response = await axios.get(`/${table}`, { params });
+//   return response.data;
+// }
 
-// GET BY ID - Obtener un registro
-export async function getById(table, id) {
-  const axios = createAxiosClient();
-  const response = await axios.get(`/${table}?id=eq.${id}`);
-  return response.data[0];
-}
+// // GET BY ID - Obtener un registro
+// export async function getById(table, id) {
+//   const axios = createAxiosClient();
+//   const response = await axios.get(`/${table}?id=eq.${id}`);
+//   return response.data[0];
+// }
 
-// POST - Crear registro
-export async function create(table, data) {
-  const axios = createAxiosClient();
-  const response = await axios.post(`/${table}`, data, {
-    headers: { 'Prefer': 'return=representation' }
-  });
-  return response.data[0];
-}
+// // POST - Crear registro
+// export async function create(table, data) {
+//   const axios = createAxiosClient();
+//   const response = await axios.post(`/${table}`, data, {
+//     headers: { 'Prefer': 'return=representation' }
+//   });
+//   return response.data[0];
+// }
 
-// PATCH - Actualizar registro
-export async function update(table, id, data) {
-  const axios = createAxiosClient();
-  const response = await axios.patch(`/${table}?id=eq.${id}`, data, {
-    headers: { 'Prefer': 'return=representation' }
-  });
-  return response.data[0];
-}
+// // PATCH - Actualizar registro
+// export async function update(table, id, data) {
+//   const axios = createAxiosClient();
+//   const response = await axios.patch(`/${table}?id=eq.${id}`, data, {
+//     headers: { 'Prefer': 'return=representation' }
+//   });
+//   return response.data[0];
+// }
 
-// DELETE - Eliminar registro
-export async function deleteRecord(table, id) {
-  const axios = createAxiosClient();
-  await axios.delete(`/${table}?id=eq.${id}`);
-}
+// // DELETE - Eliminar registro
+// export async function deleteRecord(table, id) {
+//   const axios = createAxiosClient();
+//   await axios.delete(`/${table}?id=eq.${id}`);
+// }
 
-// Query personalizada
-export async function query(table, queryString) {
-  const axios = createAxiosClient();
-  const response = await axios.get(`/${table}?${queryString}`);
-  return response.data;
-}
+// // Query personalizada
+// export async function query(table, queryString) {
+//   const axios = createAxiosClient();
+//   const response = await axios.get(`/${table}?${queryString}`);
+//   return response.data;
+// }
