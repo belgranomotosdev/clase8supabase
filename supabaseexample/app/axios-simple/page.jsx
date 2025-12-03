@@ -1,5 +1,7 @@
 export default function Page() {
-return asd
+return (<>
+  <h1>asd</h1>
+  </>)
 }
 // "use client";
 
