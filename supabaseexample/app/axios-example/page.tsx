@@ -1,4 +1,9 @@
-"use client";
+export default function AxiosExamplePage(){
+  return (<>
+  <h1>asd</h1>
+  </>)
+}
+// "use client";
 
 // import { useState, useEffect } from "react";
 // import { supabaseAPI } from "../../lib/supabase/axios-client";
@@ -11,7 +16,7 @@
 //   created_at?: string;
 // }
 
-export default function AxiosExamplePage() {
+// export default function AxiosExamplePage() {
 //   const [products, setProducts] = useState<Product[]>([]);
 //   const [loading, setLoading] = useState(false);
 //   const [error, setError] = useState<string | null>(null);
@@ -100,12 +105,11 @@ export default function AxiosExamplePage() {
 //     }
 //   }
 
-  // useEffect(() => {
-  //   fetchProducts();
-  // }, []);
+//   useEffect(() => {
+//     fetchProducts();
+//   }, []);
 
-  return 
-}
+//   return (
 //     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 p-8">
 //       <div className="max-w-6xl mx-auto">
 //         <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
@@ -318,5 +322,5 @@ export default function AxiosExamplePage() {
 //         </div>
 //       </div>
 //     </div>
-
-  // );
+//   );
+// }
