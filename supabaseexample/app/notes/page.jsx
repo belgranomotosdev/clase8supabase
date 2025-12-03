@@ -31,10 +31,10 @@ export default function Page() {
     };
   }, []);
 
-  // const getData = async () => {
-  //   const { data } = await supabase.from("notes").select();
-  //   setNotes(data || []);
-  // };
+  const getData = async () => {
+    const { data } = await supabase.from("notes").select();
+    setNotes(data || []);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
